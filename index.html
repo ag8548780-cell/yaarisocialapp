@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#FF5A36" />
+  <title>YAARI – अपना देसी सोशल मीडिया</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    * { -webkit-tap-highlight-color: transparent; }
+    body { font-family: system-ui, -apple-system, 'Noto Sans Devanagari', sans-serif; }
+    ::-webkit-scrollbar { width: 0px; height: 0px; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased">
+  <div id="root">
+    <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:sans-serif;color:#64748b;">
+      YAARI लोड हो रहा है...
+    </div>
+  </div>
+
+  <!-- Firebase Modular SDK (v13.3.0) -->
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js';
+    import {
+      getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword,
+      sendPasswordResetEmail, signOut, updatePassword, reauthenticateWithCredential,
+      EmailAuthProvider, RecaptchaVerifier, signInWithPhoneNumber
+    } from 'https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js';
+    import {
+      getFirestore, collection, doc, getDoc, getDocs, setDoc, addDoc, updateDoc, deleteDoc,
+      onSnapshot, query, where, orderBy, limit, serverTimestamp, increment, writeBatch, Timestamp
+    } from 'https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js';
+    import {
+      getStorage, ref, uploadBytes, uploadBytesResumable, getDownloadURL, deleteObject
+    } from 'https://www.gstatic.com/firebasejs/13.3.0/firebase-storage.js';
+
+    // ⚠️ यहाँ अपने Firebase प्रोजेक्ट की असली जानकारी भरें
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    const isConfigured = firebaseConfig.apiKey && !firebaseConfig.apiKey.includes("YOUR_");
+    const app = isConfigured ? initializeApp(firebaseConfig) : null;
+
+    window.YAARI_FB = {
+      isConfigured,
+      auth: app ? getAuth(app) : null,
+      db: app ? getFirestore(app) : null,
+      storage: app ? getStorage(app) : null,
+      fn: {
+        onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword,
+        sendPasswordResetEmail, signOut, updatePassword, reauthenticateWithCredential,
+        EmailAuthProvider, RecaptchaVerifier, signInWithPhoneNumber,
+        collection, doc, getDoc, getDocs, setDoc, addDoc, updateDoc, deleteDoc,
+        onSnapshot, query, where, orderBy, limit, serverTimestamp, increment, writeBatch, Timestamp,
+        ref, uploadBytes, uploadBytesResumable, getDownloadURL, deleteObject
